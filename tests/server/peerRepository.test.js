@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { PeerRepository } from '../server/peers/peerRepository.js';
+import { PeerRepository } from '../../server/peers/peerRepository.js';
 
 describe('PeerRepository', () => {
   let peerRepository;

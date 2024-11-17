@@ -1,4 +1,4 @@
-import { jest } from "@jest/globals";
+import { jest } from '@jest/globals';
 
 // Create mock with jest.fn()
 const mockOn = jest.fn();
@@ -14,16 +14,16 @@ const mockWssInstance = {
 const MockWebSocketServer = jest.fn(() => mockWssInstance);
 
 // Mock the WebSocket module before any imports that use it
-await jest.unstable_mockModule("ws", () => ({
+await jest.unstable_mockModule('ws', () => ({
   WebSocketServer: MockWebSocketServer,
 }));
 
 // Import modules after setting up the mock
-const { P2PServer } = await import("../server/wss.js");
-const { PeerRepository } = await import("../server/peers/peerRepository.js");
-const { MessageService } = await import("../server/messages/messageService.js");
+const { P2PServer } = await import('../../server/wss.js');
+const { PeerRepository } = await import('../../server/peers/peerRepository.js');
+const { MessageService } = await import('../../server/messages/messageService.js');
 
-describe("Bootstrap Server", () => {
+describe('Bootstrap Server', () => {
   let server;
   let peerRepository;
   let messageService;
@@ -37,13 +37,13 @@ describe("Bootstrap Server", () => {
     server = new P2PServer(3000, peerRepository, messageService);
   });
 
-  it("should initialize WebSocket server", () => {
+  it('should initialize WebSocket server', () => {
     server.initialize();
 
     // Verify WebSocketServer was constructed with correct port
     expect(MockWebSocketServer).toHaveBeenCalledWith({ port: 3000 });
 
     // Verify event listener was set up
-    expect(mockOn).toHaveBeenCalledWith("connection", expect.any(Function));
+    expect(mockOn).toHaveBeenCalledWith('connection', expect.any(Function));
   });
 });

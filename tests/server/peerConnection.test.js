@@ -11,9 +11,9 @@ await jest.unstable_mockModule('ws', () => ({
   WebSocket: jest.fn(() => mockWebSocket),
 }));
 
-const { PeerConnection } = await import('../server/peers/peerConnection.js');
-const { PeerRepository } = await import('../server/peers/peerRepository.js');
-const { MessageService } = await import('../server/messages/messageService.js');
+const { PeerConnection } = await import('../../server/peers/peerConnection.js');
+const { PeerRepository } = await import('../../server/peers/peerRepository.js');
+const { MessageService } = await import('../../server/messages/messageService.js');
 
 describe('PeerConnection', () => {
   let peerConnection;

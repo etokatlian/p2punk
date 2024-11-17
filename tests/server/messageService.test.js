@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { MessageService } from '../server/messages/messageService.js';
+import { MessageService } from '../../server/messages/messageService.js';
 
 describe('MessageService', () => {
   let messageService;
