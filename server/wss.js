@@ -38,6 +38,10 @@ export class P2PServer {
    * @private
    */
   setupConnectionHandler() {
+    if (!this.wss) {
+      throw new Error('WebSocketServer is not initialized');
+    }
+
     this.wss.on('connection', (ws) => {
       new PeerConnection(ws, this.peerRepository, this.messageService);
     });

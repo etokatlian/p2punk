@@ -97,7 +97,7 @@ export class PeerConnection {
 
   /**
    * Gets the current peer's data.
-   * @returns {import('./peers.js').Peer} The peer object
+   * @returns {import('./peerRepository.js').Peer} The peer object
    */
   getPeer() {
     return this.peer;
