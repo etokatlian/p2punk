@@ -6,6 +6,7 @@ export const createWss = (port) => {
   const peerRepository = new PeerRepository();
   const messageService = new MessageService();
 
+  console.log(`Server running on ${port}...`);
   return new P2PServer(port, peerRepository, messageService).initialize();
 };
 

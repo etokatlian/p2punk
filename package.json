@@ -2,12 +2,13 @@
   "name": "p2punk",
   "version": "1.0.0",
   "type": "module",
-  "main": "bootstrapServer.js",
+  "main": "bootstrap.js",
   "engines": {
     "node": ">=22.0.0 <23.0.0"
   },
   "scripts": {
     "dev": "nodemon bootstrap.js",
+    "start": "node bootstrap.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
