@@ -19,9 +19,9 @@ await jest.unstable_mockModule("ws", () => ({
 }));
 
 // Import modules after setting up the mock
-const { P2PServer } = await import("../server/webSocketServer.js");
-const { PeerRepository } = await import("../peer/peerRepository.js");
-const { MessageService } = await import("../message/messageService.js");
+const { P2PServer } = await import("../server/wss.js");
+const { PeerRepository } = await import("../server/peers/peerRepository.js");
+const { MessageService } = await import("../server/messages/messageService.js");
 
 describe("Bootstrap Server", () => {
   let server;

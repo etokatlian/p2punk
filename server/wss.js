@@ -1,5 +1,5 @@
-import { WebSocketServer } from "ws";
-import { PeerConnection } from "../peer/peerConnection.js";
+import { WebSocketServer } from 'ws';
+import { PeerConnection } from './peers/peerConnection.js';
 
 /**
  * P2P WebSocket server that manages peer connections and message handling.
@@ -8,8 +8,8 @@ export class P2PServer {
   /**
    * Creates a new P2P WebSocket server instance.
    * @param {number} port - The port number to listen on.
-   * @param {import('../peer/peerRepository.js').PeerRepository} peerRepository - Repository for managing peer data.
-   * @param {import('../message/messageService.js').MessageService} messageService - Service for handling peer messages.
+   * @param {import('./peers/peerRepository.js').PeerRepository} peerRepository - Repository for managing peer data.
+   * @param {import('./messages/messageService.js').MessageService} messageService - Service for handling peer messages.
    */
   constructor(port, peerRepository, messageService) {
     /** @private */
@@ -38,7 +38,7 @@ export class P2PServer {
    * @private
    */
   setupConnectionHandler() {
-    this.wss.on("connection", (ws) => {
+    this.wss.on('connection', (ws) => {
       new PeerConnection(ws, this.peerRepository, this.messageService);
     });
   }

@@ -4,7 +4,7 @@
   "type": "module",
   "main": "bootstrapServer.js",
   "scripts": {
-    "dev": "nodemon bootstrapServer.js",
+    "dev": "nodemon bootstrap.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll",
     "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"

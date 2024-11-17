@@ -19,10 +19,14 @@ export class MessageService {
    * @param {string} [message.peer] - ID of the sending peer (for "message" type)
    * @param {string|Object} [message.content] - The message content (for "message" type)
    * @returns {void}
-   * @throws {Error} If the WebSocket connection is not in OPEN state
    */
   send(ws, message) {
-    ws.send(JSON.stringify(message));
+    try {
+      ws.send(JSON.stringify(message));
+    } catch (error) {
+      console.error("Failed to send message:", error);
+      // Don't throw, just log the error to prevent connection termination
+    }
   }
 
   /**
@@ -35,7 +39,6 @@ export class MessageService {
    * @param {string} message.peer - ID of the sending peer
    * @param {string|Object} message.content - The message content
    * @returns {void}
-   * @throws {Error} If any peer's WebSocket connection is not in OPEN state
    */
   broadcast(peers, message) {
     // Stringify once for efficiency
@@ -45,6 +48,7 @@ export class MessageService {
         peer.ws.send(messageString);
       } catch (error) {
         console.error(`Failed to send message to peer ${peer.id}:`, error);
+        // Don't throw, just log the error to prevent broadcast interruption
       }
     });
   }

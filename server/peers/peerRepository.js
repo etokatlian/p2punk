@@ -56,11 +56,9 @@ export class PeerRepository {
    * @param {string} id - Unique identifier for the peer
    * @param {Peer} peer - Complete peer object to add to the repository
    * @returns {void}
-   * @example
-   * peerRepository.add(peer.id, { ...peer, ws: websocketConnection });
    */
   add(id, peer) {
-    this.peers[id] = peer;
+    this.peers[id] = { ...peer };
   }
 
   /**
@@ -69,8 +67,6 @@ export class PeerRepository {
    *
    * @param {string} id - Unique identifier of the peer to remove
    * @returns {void}
-   * @example
-   * peerRepository.remove("1a2b3c...");
    */
   remove(id) {
     delete this.peers[id];
@@ -78,27 +74,25 @@ export class PeerRepository {
 
   /**
    * Retrieves all peers with their complete data, including WebSocket instances.
-   * This is typically used for internal operations where the WebSocket connections are needed.
+   * Returns a deep copy of the peers to prevent external modifications.
    *
    * @returns {Array<Peer>} Array of complete peer objects including WebSocket connections
-   * @example
-   * const allPeers = peerRepository.getAll();
-   * // => [{ id: "1a2b3c...", connectionCreated: 1234567890, lastActive: 1234567890, ws: WebSocket }, ...]
    */
   getAll() {
-    return Object.values(this.peers);
+    return Object.values(this.peers).map((peer) => ({
+      ...peer,
+      // Don't deep clone the WebSocket instance
+      ws: peer.ws,
+    }));
   }
 
   /**
    * Retrieves all peers in a format safe for serialization by removing WebSocket instances.
-   * This is useful when needing to send peer data over the network or store it.
+   * Returns a deep copy of the peers without their WebSocket connections.
    *
    * @returns {Array<Omit<Peer, 'ws'>>} Array of peers without their WebSocket connections
-   * @example
-   * const serializablePeers = peerRepository.getAllSerializable();
-   * // => [{ id: "1a2b3c...", connectionCreated: 1234567890, lastActive: 1234567890 }, ...]
    */
   getAllSerializable() {
-    return this.getAll().map(({ ws, ...rest }) => rest);
+    return Object.values(this.peers).map(({ ws, ...rest }) => ({ ...rest }));
   }
 }

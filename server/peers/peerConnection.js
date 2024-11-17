@@ -11,7 +11,7 @@ export class PeerConnection {
    * Creates a new peer connection instance.
    * @param {import('ws').WebSocket} ws - The WebSocket connection instance for this peer
    * @param {import('./peerRepository.js').PeerRepository} peerRepository - Repository for managing peer data
-   * @param {import('../message/messageService.js').MessageService} messageService - Service for handling message broadcasting
+   * @param {import('../messages/messageService.js').MessageService} messageService - Service for handling message broadcasting
    */
   constructor(ws, peerRepository, messageService) {
     /** @private */
@@ -47,7 +47,7 @@ export class PeerConnection {
   sendInitialPeers() {
     const allPeers = this.peerRepository.getAllSerializable();
     this.messageService.send(this.ws, {
-      type: "all-peers",
+      type: 'all-peers',
       peers: allPeers,
     });
   }
@@ -60,7 +60,7 @@ export class PeerConnection {
   handleMessage(message) {
     const allPeers = this.peerRepository.getAll();
     this.messageService.broadcast(allPeers, {
-      type: "message",
+      type: 'message',
       peer: this.peer.id,
       content: message,
     });
@@ -79,7 +79,7 @@ export class PeerConnection {
    * @private
    */
   setupEventListeners() {
-    this.ws.on("message", (data) => {
+    this.ws.on('message', (data) => {
       try {
         // Try to parse as JSON first
         const message = JSON.parse(data.toString());
@@ -90,7 +90,7 @@ export class PeerConnection {
       }
     });
 
-    this.ws.on("close", () => {
+    this.ws.on('close', () => {
       this.handleClose();
     });
   }
