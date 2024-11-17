@@ -1,0 +1,25 @@
+name: Deploy to Droplet
+'on':
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Droplet
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          password: ${{secrets.PASSWORD}}
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            rm -rf app # Delete current app
+            mkdir app
+            cd app
+            git clone git@github.com:etokatlian/p2punk.git .
+            npm install
+            npm run start
