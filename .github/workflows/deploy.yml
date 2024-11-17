@@ -22,4 +22,4 @@ jobs:
             cd app
             git clone https://github.com/etokatlian/p2punk.git .
             npm install
-            npm run start
+            pm2 start bootstrap.js
