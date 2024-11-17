@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "main": "bootstrapServer.js",
+  "engines": {
+    "node": ">=22.0.0 <23.0.0"
+  },
   "scripts": {
     "dev": "nodemon bootstrap.js",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

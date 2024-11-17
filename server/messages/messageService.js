@@ -24,7 +24,7 @@ export class MessageService {
     try {
       ws.send(JSON.stringify(message));
     } catch (error) {
-      console.error("Failed to send message:", error);
+      console.error('Failed to send message:', error);
       // Don't throw, just log the error to prevent connection termination
     }
   }
@@ -33,7 +33,7 @@ export class MessageService {
    * Broadcasts a message to multiple peers simultaneously.
    * The message is stringified once and sent to all provided peers.
    *
-   * @param {Array<import('../peer/peers.js').Peer>} peers - Array of peers to broadcast the message to
+   * @param {Array<import('../peers/peerRepository').Peer>} peers - Array of peers to broadcast the message to
    * @param {Object} message - The message object to broadcast
    * @param {string} message.type - The type of message being broadcast (e.g., "message")
    * @param {string} message.peer - ID of the sending peer
@@ -45,6 +45,9 @@ export class MessageService {
     const messageString = JSON.stringify(message);
     peers.forEach((peer) => {
       try {
+        if (!peer.ws) {
+          throw new Error(`Peer ${peer.id} has no active WebSocket connection`);
+        }
         peer.ws.send(messageString);
       } catch (error) {
         console.error(`Failed to send message to peer ${peer.id}:`, error);
