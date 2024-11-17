@@ -40,6 +40,7 @@ describe('PeerConnection', () => {
       if (event === 'close') mockCloseHandler = handler;
     });
 
+    // @ts-expect-error - Mocking WebSocket
     peerConnection = new PeerConnection(mockWebSocket, peerRepository, messageService);
   });
 
@@ -65,6 +66,7 @@ describe('PeerConnection', () => {
 
     it('should send initial peers list to new connection', () => {
       expect(mockWebSocket.send).toHaveBeenCalled();
+      // @ts-expect-error - Mocking WebSocket
       const sentMessage = JSON.parse(mockWebSocket.send.mock.calls[0][0]);
       expect(sentMessage.type).toBe('all-peers');
       expect(Array.isArray(sentMessage.peers)).toBe(true);
@@ -75,6 +77,7 @@ describe('PeerConnection', () => {
         throw new Error('Send failed');
       });
 
+      // @ts-expect-error - Mocking WebSocket
       // Should not throw when creating new connection
       expect(() => new PeerConnection(mockWebSocket, peerRepository, messageService)).not.toThrow();
 
@@ -93,6 +96,7 @@ describe('PeerConnection', () => {
 
       // Verify broadcast was called with correct format
       expect(mockWebSocket.send).toHaveBeenCalled();
+      // @ts-expect-error - Mocking WebSocket
       const broadcastMessage = JSON.parse(mockWebSocket.send.mock.calls[1][0]);
       expect(broadcastMessage.type).toBe('message');
       expect(broadcastMessage.peer).toBe(peerConnection.getPeer().id);
@@ -108,6 +112,7 @@ describe('PeerConnection', () => {
 
       // Verify broadcast was called with correct format
       expect(mockWebSocket.send).toHaveBeenCalled();
+      // @ts-expect-error - Mocking WebSocket
       const broadcastMessage = JSON.parse(mockWebSocket.send.mock.calls[1][0]);
       expect(broadcastMessage.type).toBe('message');
       expect(broadcastMessage.peer).toBe(peerConnection.getPeer().id);
@@ -122,6 +127,7 @@ describe('PeerConnection', () => {
       mockMessageHandler(messageBuffer);
 
       // Should treat it as plain text
+      // @ts-expect-error - Mocking WebSocket
       const broadcastMessage = JSON.parse(mockWebSocket.send.mock.calls[1][0]);
       expect(broadcastMessage.content).toBe(malformedJson);
     });
@@ -156,6 +162,7 @@ describe('PeerConnection', () => {
 
     it('should handle multiple peer connections', () => {
       // Create second connection
+      // @ts-expect-error - Mocking WebSocket
       const peerConnection2 = new PeerConnection(mockWebSocket, peerRepository, messageService);
 
       expect(peerRepository.getAll()).toHaveLength(2);
