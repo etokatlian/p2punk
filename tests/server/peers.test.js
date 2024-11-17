@@ -24,6 +24,7 @@ describe('Peer Management', () => {
     jest.clearAllMocks();
     peerRepository = new PeerRepository();
     messageService = new MessageService();
+    // @ts-expect-error - Mocking WebSocket
     peerConnection = new PeerConnection(mockWebSocket, peerRepository, messageService);
   });
 
@@ -43,6 +44,7 @@ describe('Peer Management', () => {
 
     it('should create unique IDs for different peers', () => {
       const peer1 = peerConnection.getPeer();
+      // @ts-expect-error - Mocking WebSocket
       const peerConnection2 = new PeerConnection(mockWebSocket, peerRepository, messageService);
       const peer2 = peerConnection2.getPeer();
 

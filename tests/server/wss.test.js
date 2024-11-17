@@ -75,6 +75,7 @@ describe('WebSocketServer', () => {
 
       // Verify initial peers list was sent
       expect(mockWs.send).toHaveBeenCalled();
+      // @ts-expect-error - Mocking WebSocket
       const sentMessage = JSON.parse(mockWs.send.mock.calls[0][0]);
       expect(sentMessage.type).toBe('all-peers');
     });
@@ -96,6 +97,7 @@ describe('WebSocketServer', () => {
       // Verify each client received peers list
       clients.forEach((client) => {
         expect(client.send).toHaveBeenCalled();
+        // @ts-expect-error - Mocking WebSocket
         const sentMessage = JSON.parse(client.send.mock.calls[0][0]);
         expect(sentMessage.type).toBe('all-peers');
       });
@@ -113,6 +115,7 @@ describe('WebSocketServer', () => {
       mockWs.on.mockImplementation((event, handler) => {
         if (event === 'close') {
           // Immediately call the close handler to simulate disconnect
+          // @ts-expect-error - Mocking WebSocket
           handler();
         }
       });
@@ -155,6 +158,7 @@ describe('WebSocketServer', () => {
       mockWs.on.mockImplementation((event, handler) => {
         if (event === 'message') {
           // Send invalid JSON to test error handling
+          // @ts-expect-error - Mocking WebSocket
           handler(Buffer.from('{ invalid json'));
         }
       });
